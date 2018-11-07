@@ -23,14 +23,14 @@ The output value must always be reduced and never improper (it may be an integer
 See the examples section below for clarification.
 
 **Examples**
-```
-Input	Output	Notes
-1/4 + 1_1/2	1_3/4	
-8/4 + 2	4	Input may be an improper fraction.
--1 * -1/2	1/2	
--11/17 + -1/17	-12/17	
-0 * 25_462/543	0	Remember to check for border/special cases.
-```
+
+|Input | Output | Notes |
+| --- | --- | --- |
+| 1/4 + 1_1/2	| 1_3/4	|
+| 8/4 + 2	| 4	| Input may be an improper fraction. |
+| -1 * -1/2 |	1/2	|
+| -11/17 + -1/17 | -12/17	|
+| 0 * 25_462/543 |	0	| Remember to check for border/special cases. |
 
 ## Code Organization
 You must organize your code in the following way to receive credit for your project.  If you deviate from this, your unit tests will fail, and significant points will be deducted from your grade.
@@ -80,7 +80,7 @@ There will be 3 checkpoints to ensure that the calculator is on track for comple
 -	All answers must be reduced
 -	All tests should pass
 
-##Grading Scheme/Rubric
+## Grading Scheme/Rubric
 
 **Functional Correctness - 40 points**
 ---------------------------------------

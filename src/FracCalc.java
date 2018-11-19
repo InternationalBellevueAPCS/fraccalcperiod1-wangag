@@ -7,7 +7,7 @@ public class FracCalc {
     public static void main(String[] args) 
     {
         // TODO: Read the input from the user and call produceAnswer with an equation
-        // Checkpoint 1: Create a Scanner, read one line of input, pass that input to produceAnswer, print the result.creates a Scanner, reads one line of input, and passes that input to produceAnswer.
+        // Checkpoint 1: Create a Scanner, read one line of input, pass that input to produceAnswer, print the result.
         // Checkpoint 2: Accept user input multiple times.
     }
     

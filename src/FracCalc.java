@@ -7,8 +7,6 @@ public class FracCalc {
      * @param args - unused
      */
     public static void main(String[] args) {
-        // TODO: Read the input from the user and call produceAnswer with an equation
-        // Checkpoint 1: Create a Scanner, read one line of input, pass that input to produceAnswer, print the result.
         Scanner console = new Scanner(System.in);
         System.out.print("input: ");
         String input = console.nextLine();
@@ -20,7 +18,6 @@ public class FracCalc {
             input = console.nextLine();
         }
         console.close();
-    	// Checkpoint 2: Accept user input multiple times.
     }
     
     /**
@@ -39,9 +36,6 @@ public class FracCalc {
     	
     	String parts1 = parseOperand(operand1);
     	String parts2 = parseOperand(operand2);
-    	
-        // Checkpoint 2: Return the second operand as a string representing each part.
-        //               Example "4/5 * 1_2/4" returns "whole:1 numerator:2 denominator:4".
         // Checkpoint 3: Evaluate the formula and return the result as a fraction.
         //               Example "4/5 * 1_2/4" returns "6/5".
         //               Note: Answer does not need to be reduced, but it must be correct.

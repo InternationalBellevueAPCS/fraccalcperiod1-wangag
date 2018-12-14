@@ -33,22 +33,26 @@ public class FracCalc {
     	String operand1 = sc.next();
     	String operator = sc.next();
     	String operand2 = sc.next();
-    	sc.close();
+    	String answer = calculate(operand1, operator, operand2);
+
+    	while (sc.hasNext()) {
+    		operator = sc.next();
+    		operand2 = sc.next();
+        	answer = calculate(answer, operator, operand2);
+    	}
     	
+    	sc.close();
+        return answer;
+    }
+    /*
+     * Performs the desired calculation using the given operands and operator. 
+     */
+    public static String calculate(String operand1, String operator, String operand2) {
     	int[] parts1 = parseOperand(operand1);
     	int[] parts2 = parseOperand(operand2);
-        // Checkpoint 3: Evaluate the formula and return the result as a fraction.
-        //               Example "4/5 * 1_2/4" returns "6/5".
-        //               Note: Answer does not need to be reduced, but it must be correct.
-    	
     	int[] fraction1 = makeImproper(parts1);
     	int[] fraction2 = makeImproper(parts2);
-    	String answer = evaluate(operator, fraction1, fraction2);
-    	
-        // Final project: All answers must be reduced.
-        //               Example "4/5 * 1_2/4" returns "1_1/5".
-        
-        return answer;
+    	return evaluate(operator, fraction1, fraction2);
     }
     
     /*
@@ -56,17 +60,21 @@ public class FracCalc {
      * on expected delimiters and saves these values into an array.
      */
     public static int[] parseOperand(String operand) {
-    	int[] parts = new int[3];
+    	int[] parts = new int[3];	// stores whole, numerator, and denominator
     	for (int i = 0; i < operand.length(); i++) {
     		if (operand.charAt(i) == '_') {
+    			// whole number precedes underscore
     			parts[0] = Integer.parseInt(operand.substring(0, i));
     		}
     		if (operand.charAt(i) == '/') {
     			if (operand.indexOf('_') != -1) {
+    				// when numerator follows an underscore
     				parts[1] = Integer.parseInt(operand.substring(operand.indexOf('_') + 1, i));
     			} else {
+    				// when no whole number is entered
     				parts[1] = Integer.parseInt(operand.substring(0, i));
     			}
+    			// part after slash is the denominator
     			parts[2] = Integer.parseInt(operand.substring(i+1));
     		}
     	}
@@ -84,7 +92,7 @@ public class FracCalc {
     	int[] fraction = new int[2];
     	fraction[0] = parts[1];
 		fraction[1] = parts[2];
-    	if (parts[0] < 0) {
+    	if (parts[0] < 0 || parts[2] < 0) {
     		// applies any existing negative signs to numerator
     		fraction[0] *= -1;
     	}
@@ -93,7 +101,7 @@ public class FracCalc {
 			// if a whole number, denominator is set to 1
 			fraction[1] = 1;
 		}
-		fraction[0] += parts[0] * fraction[1];
+		fraction[0] += parts[0] * fraction[1];	// adds whole to the fraction
     	return fraction;
     }
     
@@ -123,12 +131,14 @@ public class FracCalc {
     		// multiplies first operand by reciprocal of second
     		numerator = fraction1[0] * fraction2[1];
     		denominator = fraction1[1] * fraction2[0];
+    		if (denominator < 0) {
+    			// moves negative sign in front of fraction
+    			denominator *= -1;
+    			numerator *= -1;
+    		}
     	}
-    	if (denominator == 1 || numerator == 0) {
-    		// in case the result is a whole number
-    		return numerator + "";
-    	}
-    	return numerator + "/" + denominator;
+    	String result = reduce(numerator, denominator);
+    	return result;
     }
     
     /*
@@ -143,6 +153,32 @@ public class FracCalc {
     		}
     	}
     	return fraction;
+    }
+    
+    /*
+     * Reduces the fraction and changes improper fractions to mixed numbers.
+     */
+    public static String reduce(int num, int denom) {
+    	if (denom == 1 || num == 0) {
+    		// in case the result is a whole number
+    		return num + "";
+    	}
+    	
+    	int divisor = greatestCommonDivisor(num, denom);
+    	num /= divisor;
+    	denom /= divisor;
+    	
+		if (Math.abs(num) >= denom) {
+			// changes improper fraction to mixed number
+			int whole = num / denom;
+			num = Math.abs(num % denom);
+			denom = Math.abs(denom);
+			if (num != 0) {
+				return whole + "_" + num + "/" + denom;
+			}
+			return whole + "";
+		}
+    	return num + "/" + denom;
     }
     
     /**
